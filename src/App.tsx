@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import type { Field, FieldType } from "./type.ts";
 import { FieldPreview } from "./components/FieldPreview.tsx";
+import FieldEditor  from "./components/FieldEditor.tsx";
+import { deleteField, updateFields } from "./utils.ts";
 
 
 function App() {
@@ -20,17 +22,23 @@ const addField = (type: FieldType) => {
   setFields((prev) => [...prev, newField]); 
 };
 
-const updateField = (id: string, updates: Partial<Field>) => {
-    setFields((prev) =>
-      prev.map((field) =>
-        field.id === id ? { ...field, ...updates } : field
-      )
-    );
-  };
+  const updateField = useCallback(
+    (id: string, updates: Partial<Field>) => {
+      setFields((prev) =>
+        updateFields(prev, id, updates)
+      );
+    },
+    []
+  );
 
-  const deleteField = (id: string) => {
-    setFields((prev) => prev.filter((field) => field.id !== id));
-  };
+  const handleDeleteField = useCallback(
+    (id: string) => {
+      setFields((prev) =>
+        deleteField(prev, id)
+      );
+    },
+    []
+  );
 
   return (
     <main className="app">
@@ -55,70 +63,7 @@ const updateField = (id: string, updates: Partial<Field>) => {
           )}
 
           {fields.map((field) => (
-            <div className="field" key={field.id}>
-              <div className="field-header">
-                <strong>{field.type}</strong>
-
-                <button onClick={() => deleteField(field.id)}>
-                  Delete
-                </button>
-              </div>
-
-              <input
-                value={field.label}
-                placeholder="Label"
-                onChange={(e) =>
-                  updateField(field.id, {
-                    label: e.target.value,
-                  })
-                }
-              />
-
-              <label>
-                <input
-                  type="checkbox"
-                  checked={field.required}
-                  onChange={(e) =>
-                    updateField(field.id, {
-                      required: e.target.checked,
-                    })
-                  }
-                />
-                Required
-              </label>
-
-              {field.type === "number" && (
-                <div className="number-options">
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    value={field.min ?? ""}
-                    onChange={(e) =>
-                      updateField(field.id, {
-                        min:
-                          e.target.value === ""
-                            ? undefined
-                            : Number(e.target.value),
-                      })
-                    }
-                  />
-
-                  <input
-                    type="number"
-                    placeholder="Max"
-                    value={field.max ?? ""}
-                    onChange={(e) =>
-                      updateField(field.id, {
-                        max:
-                          e.target.value === ""
-                            ? undefined
-                            : Number(e.target.value),
-                      })
-                    }
-                  />
-                </div>
-              )}
-            </div>
+            <FieldEditor field={field} onDelete={handleDeleteField} onUpdate={updateField} />
           ))}
         </section>
    
@@ -135,6 +80,8 @@ const updateField = (id: string, updates: Partial<Field>) => {
           </form>
         </section>
       </div>
+
+      
     </main>
   );
 }
