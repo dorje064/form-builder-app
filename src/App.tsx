@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import type { Field, FieldType } from "./type.ts";
 import { FieldPreview } from "./components/FieldPreview.tsx";
 import FieldEditor  from "./components/FieldEditor.tsx";
-import { deleteField, updateFields } from "./utils.ts";
+import { addChildField, deleteField, updateFields } from "./utils.ts";
 
 
 function App() {
@@ -40,6 +40,23 @@ const addField = (type: FieldType) => {
     []
   );
 
+  const handleAddChild = useCallback(
+  (groupId: string, type: FieldType) => {
+    const child = {
+    id: crypto.randomUUID(),
+    type: type, 
+    label: type === "group" ? "New Group" : `New ${type} field`, 
+    required: false, 
+     ...(type === "group" ? { children: [] } : {}), 
+    }
+
+    setFields((prev) =>
+      addChildField(prev, groupId, child)
+    );
+  },
+  []
+);
+
   return (
     <main className="app">
       <header>
@@ -63,7 +80,12 @@ const addField = (type: FieldType) => {
           )}
 
           {fields.map((field) => (
-            <FieldEditor field={field} onDelete={handleDeleteField} onUpdate={updateField} />
+            <FieldEditor 
+              field={field} 
+              onDelete={handleDeleteField} 
+              onUpdate={updateField} 
+              onAddChild={handleAddChild}
+            />
           ))}
         </section>
    

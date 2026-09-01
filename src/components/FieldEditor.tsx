@@ -1,15 +1,17 @@
-import type { Field } from "../type.ts";
+import type { Field, FieldType } from "../type";
 
-interface FieldEditorProps {
+type FieldEditorProps = {
   field: Field;
   onUpdate: (id: string, updates: Partial<Field>) => void;
   onDelete: (id: string) => void;
+  onAddChild: (groupId: string, type: FieldType) => void;
 };
 
 export default function FieldEditor({
   field,
   onUpdate,
   onDelete,
+  onAddChild,
 }: FieldEditorProps) {
   return (
     <div className="field">
@@ -81,14 +83,35 @@ export default function FieldEditor({
 
       {field.type === "group" && (
         <div className="group-children">
-          {field.children?.map((child) => (
-            <FieldEditor
-              key={child.id}
-              field={child}
-              onUpdate={onUpdate}
-              onDelete={onDelete}
-            />
-          ))}
+          <div className="toolbar">
+            <button type="button" onClick={() => onAddChild(field.id, "text")} >
+              + Text
+            </button>
+
+            <button type="button" onClick={() => onAddChild(field.id, "number") }>
+              + Number
+            </button>
+
+            <button type="button" onClick={() => onAddChild(field.id, "group") }>
+              + Group
+            </button>
+          </div>
+
+          {field.children?.length ? (
+            field.children.map((child) => (
+              <FieldEditor
+                key={child.id}
+                field={child}
+                onUpdate={onUpdate}
+                onDelete={onDelete}
+                onAddChild={onAddChild}
+              />
+            ))
+          ) : (
+            <p className="empty">
+              No fields in this group.
+            </p>
+          )}
         </div>
       )}
     </div>
