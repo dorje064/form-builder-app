@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import type { Field, FieldType } from "./type.ts";
+import { FieldPreview } from "./components/FieldPreview.tsx";
 
 
 function App() {
@@ -44,6 +45,7 @@ const updateField = (id: string, updates: Partial<Field>) => {
         <button onClick={() => {addField('group')}}>+ Group</button>
       </div>
 
+      <div className="layout">
       {/* Builder */} 
        <section className="panel">
           <h2>Fields</h2>
@@ -119,7 +121,20 @@ const updateField = (id: string, updates: Partial<Field>) => {
             </div>
           ))}
         </section>
+   
+        {/* Preview */}
+        <section className="panel">
+          <h2>Live Preview</h2>
 
+          <form onSubmit={(e) => e.preventDefault()}>
+            {fields.map((field) => (
+              <FieldPreview key={field.id} field={field} />
+            ))}
+
+            {fields.length > 0 && <button type="submit" style={{marginTop: '16px'}}>Submit</button>}
+          </form>
+        </section>
+      </div>
     </main>
   );
 }

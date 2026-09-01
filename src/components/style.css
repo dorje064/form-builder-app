@@ -1,0 +1,15 @@
+fieldset { 
+  padding: 15px; 
+  margin-bottom: 15px; 
+}
+
+.preview-field {
+  margin-bottom: 16px; 
+}
+
+.preview-field input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px;
+}
