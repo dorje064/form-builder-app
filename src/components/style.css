@@ -31,3 +31,22 @@ fieldset {
   font-size: 12px;
   padding: 5px 8px;
 }
+
+.json-panel { 
+  margin-top: 20px; 
+} 
+
+.json-actions { 
+  display: flex; 
+  gap: 8px; 
+  margin-bottom: 10px; 
+}
+
+textarea { 
+  min-height: 180px; 
+  resize: vertical; 
+} 
+
+.empty { 
+  color: #888; 
+}
