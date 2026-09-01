@@ -13,3 +13,21 @@ fieldset {
   margin-top: 6px;
   padding: 9px;
 }
+
+.group-children {
+  margin-top: 12px;
+  margin-left: 16px;
+  padding-left: 12px;
+  border-left: 2px solid #ddd;
+}
+
+.group-actions {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.group-actions button {
+  font-size: 12px;
+  padding: 5px 8px;
+}

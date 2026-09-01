@@ -1,4 +1,5 @@
 import type { Field, FieldType } from "../type";
+import './style.css'
 
 type FieldEditorProps = {
   field: Field;
@@ -83,7 +84,7 @@ export default function FieldEditor({
 
       {field.type === "group" && (
         <div className="group-children">
-          <div className="toolbar">
+          <div className="group-actions">
             <button type="button" onClick={() => onAddChild(field.id, "text")} >
               + Text
             </button>
