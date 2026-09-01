@@ -37,4 +37,31 @@ button {
   margin-bottom: 20px; 
 }
 
+.panel { 
+  background: white; 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  padding: 20px; 
+} 
 
+.field { 
+  border: 1px solid #ddd; 
+  border-radius: 6px; 
+  padding: 12px; 
+  margin-bottom: 10px; 
+} 
+
+.field-header { 
+  display: flex; 
+  justify-content: space-between; 
+  margin-bottom: 10px; 
+}
+
+.field input:not([type="checkbox"]),
+ textarea { 
+  width: 100%; 
+  padding: 8px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  margin-bottom: 10px; 
+}
