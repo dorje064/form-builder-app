@@ -3,6 +3,10 @@
 
 A simple React + TypeScript form builder built as a coding assessment.
 
+## Demo 
+
+https://form-builder-app.surge.sh
+
 ## Features
 
 - Add text, number, and group fields
